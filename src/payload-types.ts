@@ -562,13 +562,41 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 export interface Home {
   id: number;
   /**
-   * 메인 상단 배경에 재생할 동영상(mp4). 비워두면 기본 남색 배경이 표시됩니다.
+   * 메인 상단 배경 동영상(mp4). 비우면 기본 남색 배경.
    */
   heroVideo?: (number | null) | HeroMedia;
-  /**
-   * 동영상이 로딩되기 전/재생 불가 시 보여줄 이미지.
-   */
   heroPoster?: (number | null) | Media;
+  heroEyebrow?: string | null;
+  heroTitle?: string | null;
+  heroSubtitle?: string | null;
+  strengthsTitle?: string | null;
+  strengthsSubtitle?: string | null;
+  /**
+   * 카드 추가/삭제·순서 변경 가능
+   */
+  strengths?:
+    | {
+        title: string;
+        description?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  productsTitle?: string | null;
+  productsSubtitle?: string | null;
+  /**
+   * 카드 추가/삭제·순서 변경 가능
+   */
+  productCards?:
+    | {
+        title: string;
+        description?: string | null;
+        image?: (number | null) | Media;
+        id?: string | null;
+      }[]
+    | null;
+  videoTitle?: string | null;
+  videoSubtitle?: string | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -579,6 +607,31 @@ export interface Home {
 export interface HomeSelect<T extends boolean = true> {
   heroVideo?: T;
   heroPoster?: T;
+  heroEyebrow?: T;
+  heroTitle?: T;
+  heroSubtitle?: T;
+  strengthsTitle?: T;
+  strengthsSubtitle?: T;
+  strengths?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  productsTitle?: T;
+  productsSubtitle?: T;
+  productCards?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        image?: T;
+        id?: T;
+      };
+  videoTitle?: T;
+  videoSubtitle?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

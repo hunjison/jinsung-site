@@ -14,6 +14,7 @@ export const site = {
     '강원도 원주의 레이저 가공 전문 진성레이져입니다. 스텐·철·알루미늄 파이프 및 판재를 정밀 레이저 가공하고, 난간·방범창·사다리·조형물 등 각종 제품을 도면 작업부터 제작까지 주문 제작합니다.',
   address: '강원특별자치도 원주시 흥업면 봉현길 142',
   tel: '033-734-8801',
+  mobile: '010-5008-3634',
   fax: '033-734-8808',
   email: 'sjj0544@naver.com',
   kakaoId: 'jang5008',
@@ -31,6 +32,8 @@ export const site = {
 
 /** 전화 걸기용 tel: 링크 (숫자만) */
 export const telHref = `tel:${site.tel.replace(/[^0-9]/g, '')}`
+/** 휴대폰 걸기용 tel: 링크 (단일 통화 버튼에 사용) */
+export const mobileHref = `tel:${site.mobile.replace(/[^0-9]/g, '')}`
 
 /** 상단/하단 내비게이션 */
 export const nav = [

@@ -3,7 +3,7 @@ import config from '@/payload.config'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { PageHero } from '@/components/site/PageHero'
-import { productCategories, site, telHref } from '@/lib/site'
+import { productCategories, site, mobileHref } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -147,10 +147,10 @@ function EmptyFallback() {
             드립니다.
           </p>
           <a
-            href={telHref}
+            href={mobileHref}
             className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-xl font-bold text-brand-800 shadow-sm transition-colors hover:bg-brand-50"
           >
-            ☎ 전화 상담 {site.tel}
+            ☎ 전화 상담 {site.mobile}
           </a>
         </div>
       </Section>
@@ -214,10 +214,10 @@ export default async function ProductsPage() {
                 도면 작업부터 납품까지 전 과정을 맡겨 주시면 됩니다.
               </p>
               <a
-                href={telHref}
+                href={mobileHref}
                 className="inline-flex items-center justify-center rounded-lg bg-white px-8 py-4 text-xl font-bold text-brand-800 shadow-sm transition-colors hover:bg-brand-50"
               >
-                ☎ 전화 상담 {site.tel}
+                ☎ 전화 상담 {site.mobile}
               </a>
             </div>
           </Section>

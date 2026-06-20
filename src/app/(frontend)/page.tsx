@@ -5,7 +5,7 @@ import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { MapEmbed } from '@/components/site/MapEmbed'
-import { productCategories, site, strengths, telHref } from '@/lib/site'
+import { productCategories, site, strengths, telHref, mobileHref } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
@@ -98,10 +98,10 @@ export default async function HomePage() {
               제품·가공 보기
             </Link>
             <a
-              href={telHref}
+              href={mobileHref}
               className="inline-flex items-center justify-center rounded-lg bg-accent px-7 py-4 text-lg font-bold text-white shadow-sm transition-colors hover:bg-accent-dark"
             >
-              ☎ 전화 상담 {site.tel}
+              ☎ 전화 상담 {site.mobile}
             </a>
           </div>
         </Container>
@@ -194,6 +194,14 @@ export default async function HomePage() {
               description="견적 및 주문제작 문의는 전화로 편하게 상담해 드립니다."
             />
             <dl className="mt-8 space-y-3 text-lg">
+              <div className="flex gap-3">
+                <dt className="w-20 shrink-0 font-bold text-slate-500">휴대폰</dt>
+                <dd>
+                  <a href={mobileHref} className="font-bold text-brand-700">
+                    {site.mobile}
+                  </a>
+                </dd>
+              </div>
               <div className="flex gap-3">
                 <dt className="w-20 shrink-0 font-bold text-slate-500">전화</dt>
                 <dd>

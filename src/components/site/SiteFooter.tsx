@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { nav, site, telHref } from '@/lib/site'
+import { nav, site, telHref, mobileHref } from '@/lib/site'
 import { Container } from './Container'
 
 export function SiteFooter() {
@@ -48,6 +48,12 @@ export function SiteFooter() {
                 전화{' '}
                 <a href={telHref} className="font-semibold text-white hover:text-accent">
                   {site.tel}
+                </a>
+              </li>
+              <li>
+                휴대폰{' '}
+                <a href={mobileHref} className="font-semibold text-white hover:text-accent">
+                  {site.mobile}
                 </a>
               </li>
               <li>팩스 {site.fax}</li>

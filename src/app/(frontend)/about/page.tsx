@@ -3,7 +3,7 @@ import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { PageHero } from '@/components/site/PageHero'
-import { site, telHref, strengths, productCategories } from '@/lib/site'
+import { site, mobileHref, strengths, productCategories } from '@/lib/site'
 
 export const metadata = { title: '회사소개' }
 
@@ -157,10 +157,10 @@ export default function AboutPage() {
           </div>
           <div className="flex shrink-0 flex-col gap-3 sm:flex-row">
             <a
-              href={telHref}
+              href={mobileHref}
               className="inline-flex items-center justify-center rounded-lg bg-accent px-8 py-4 text-lg font-bold text-white shadow-sm transition-colors hover:bg-accent-dark"
             >
-              ☎ 전화 상담 {site.tel}
+              ☎ 전화 상담 {site.mobile}
             </a>
             <Link
               href="/location"

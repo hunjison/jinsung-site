@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { PageHero } from '@/components/site/PageHero'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
-import { site, telHref } from '@/lib/site'
+import { site, telHref, mobileHref } from '@/lib/site'
 import KakaoMap from './KakaoMap'
 
 export const metadata: Metadata = {
@@ -44,6 +44,15 @@ export default function LocationPage() {
           {/* 전화 / 팩스 카드 */}
           <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
             <div className="space-y-4">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-brand-500">휴대폰</p>
+                <a
+                  href={mobileHref}
+                  className="mt-1 block text-2xl font-bold text-brand-700 hover:text-brand-800"
+                >
+                  {site.mobile}
+                </a>
+              </div>
               <div>
                 <p className="text-sm font-bold uppercase tracking-widest text-brand-500">전화</p>
                 <a
@@ -174,10 +183,10 @@ export default function LocationPage() {
             />
           </div>
           <a
-            href={telHref}
+            href={mobileHref}
             className="inline-flex shrink-0 items-center justify-center rounded-lg bg-accent px-9 py-5 text-xl font-bold text-white shadow-sm transition-colors hover:bg-accent-dark"
           >
-            ☎&nbsp;{site.tel}
+            ☎&nbsp;{site.mobile}
           </a>
         </div>
       </Section>
