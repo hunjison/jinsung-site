@@ -12,16 +12,16 @@ export const site = {
   tagline: '스텐·철·알루미늄 파이프레이저 / 판(평철)레이저 정밀 가공·주문제작',
   description:
     '강원도 원주의 레이저 가공 전문 진성레이져입니다. 스텐·철·알루미늄 파이프 및 판재를 정밀 레이저 가공하고, 난간·방범창·사다리·조형물 등 각종 제품을 도면 작업부터 제작까지 주문 제작합니다.',
-  address: '강원도 원주시 동화골길 25',
-  addressOld: '강원도 원주시 문막읍 동화리 561-1',
+  address: '강원특별자치도 원주시 흥업면 봉현길 142',
   tel: '033-734-8801',
   fax: '033-734-8808',
   email: 'sjj0544@naver.com',
   kakaoId: 'jang5008',
   bizNo: '411-24-21517',
   mailOrder: '신고면제',
-  // 지도/오시는 길에서 사용할 대략 좌표 (원주 동화골길 인근, 추후 정확히 보정)
-  geo: { lat: 37.3486, lng: 127.9202 },
+  // 지도 fallback 중심 좌표 (흥업면 봉현길 인근 근사값).
+  // 카카오맵은 아래 주소를 직접 지오코딩해 마커를 정확히 찍고, 실패 시에만 이 좌표 사용.
+  geo: { lat: 37.2746, lng: 127.9156 },
   links: {
     cafe: 'https://cafe.naver.com/jinsungstill3634',
     blog: 'https://blog.naver.com/wkdrhkdwns01',

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import { site } from '@/lib/site'
 
 const KAKAO_SDK_URL = (appKey: string) =>
-  `//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false`
+  `//dapi.kakao.com/v2/maps/sdk.js?appkey=${appKey}&autoload=false&libraries=services`
 
 type MapState = 'loading' | 'ready' | 'fallback'
 
@@ -33,7 +33,6 @@ function MapFallback() {
     <div className="flex min-h-72 flex-col items-center justify-center gap-6 rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center">
       <div>
         <p className="text-lg font-bold text-slate-700">{site.address}</p>
-        <p className="mt-1 text-base text-slate-500">({site.addressOld})</p>
       </div>
       <div className="flex flex-col gap-3 sm:flex-row">
         {externalMapLinks.map((link) => (
@@ -81,13 +80,36 @@ export default function KakaoMap() {
             return
           }
 
-          const center = new kakao.maps.LatLng(site.geo.lat, site.geo.lng)
+          const fallbackCenter = new kakao.maps.LatLng(site.geo.lat, site.geo.lng)
           const map = new kakao.maps.Map(container, {
-            center,
+            center: fallbackCenter,
             level: 4,
           })
 
-          new kakao.maps.Marker({ position: center, map })
+          const placeMarker = (position: unknown) => {
+            new kakao.maps.Marker({ position, map })
+          }
+
+          // 주소를 직접 지오코딩해 정확한 위치에 마커 표시 (services 라이브러리)
+          const geocoder = kakao.maps.services && new kakao.maps.services.Geocoder()
+          if (geocoder) {
+            geocoder.addressSearch(
+              site.address,
+              // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (result: any[], status: string) => {
+                if (status === kakao.maps.services.Status.OK && result[0]) {
+                  const coords = new kakao.maps.LatLng(Number(result[0].y), Number(result[0].x))
+                  map.setCenter(coords)
+                  placeMarker(coords)
+                } else {
+                  placeMarker(fallbackCenter)
+                }
+              },
+            )
+          } else {
+            placeMarker(fallbackCenter)
+          }
+
           setState('ready')
         } catch {
           setState('fallback')

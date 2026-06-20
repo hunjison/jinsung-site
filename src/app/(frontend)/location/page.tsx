@@ -20,7 +20,7 @@ export default function LocationPage() {
         <SectionHeading
           eyebrow="LOCATION"
           title="찾아오시는 길"
-          description="강원도 원주시 동화골길 25에 위치한 진성레이져를 지도로 확인하세요."
+          description={`${site.address}에 위치한 진성레이져를 지도로 확인하세요.`}
         />
         <div className="mt-10">
           <KakaoMap />
@@ -39,7 +39,6 @@ export default function LocationPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
             <p className="text-sm font-bold uppercase tracking-widest text-brand-500">주소</p>
             <p className="mt-3 text-xl font-bold leading-snug text-slate-900">{site.address}</p>
-            <p className="mt-1 text-base text-slate-500">({site.addressOld})</p>
           </div>
 
           {/* 전화 / 팩스 카드 */}
