@@ -27,8 +27,8 @@ export default function HomePage() {
             파이프·판재 정밀 레이저 가공
           </h1>
           <p className="mt-5 max-w-2xl text-lg text-brand-100 sm:text-xl">
-            파이프레이저와 판(평철)레이저로 절단·타공부터, 난간·방범창·조형물 등 각종 제품을 도면
-            작업부터 제작까지. 원주의 레이저 가공, 진성레이져입니다.
+            파이프레이저와 판(평철)레이저로 절단·타공은 물론, 난간·방범창·조형물 등 각종 제품을 도면
+            작업부터 제작까지 책임집니다. 원주의 레이저 가공, 진성레이져입니다.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link

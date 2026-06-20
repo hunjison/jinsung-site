@@ -128,7 +128,7 @@ function EmptyFallback() {
                 <h3 className="text-xl font-bold text-slate-900">{cat.name}</h3>
                 <p className="mt-3 text-slate-600 leading-relaxed">{cat.desc}</p>
                 <p className="mt-4 text-sm font-medium text-brand-600">
-                  현재 준비 중입니다. 제작 문의는 전화로 주세요.
+                  현재 준비 중입니다. 제작 문의는 전화로 연락 주세요.
                 </p>
               </div>
             )
