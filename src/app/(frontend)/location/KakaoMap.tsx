@@ -28,13 +28,19 @@ const externalMapLinks = [
   },
 ] as const
 
+// 카카오 키가 없을 때: API 키 불필요한 Google 지도 임베드(실제 지도) + 외부 지도앱 링크
 function MapFallback() {
   return (
-    <div className="flex min-h-72 flex-col items-center justify-center gap-6 rounded-2xl border border-slate-200 bg-slate-50 p-8 text-center">
-      <div>
-        <p className="text-lg font-bold text-slate-700">{site.address}</p>
-      </div>
-      <div className="flex flex-col gap-3 sm:flex-row">
+    <div>
+      <iframe
+        title={`${site.name} 위치 지도`}
+        src={`https://maps.google.com/maps?q=${encodedAddress}&z=16&hl=ko&output=embed`}
+        loading="lazy"
+        className="h-72 w-full overflow-hidden rounded-2xl border border-slate-200 sm:h-96"
+        style={{ border: 0 }}
+        referrerPolicy="no-referrer-when-downgrade"
+      />
+      <div className="mt-4 flex flex-col gap-3 sm:flex-row">
         {externalMapLinks.map((link) => (
           <a
             key={link.href}

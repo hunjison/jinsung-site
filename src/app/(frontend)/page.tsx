@@ -4,6 +4,7 @@ import config from '@/payload.config'
 import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
+import { MapEmbed } from '@/components/site/MapEmbed'
 import { productCategories, site, strengths, telHref } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
@@ -217,9 +218,7 @@ export default async function HomePage() {
               찾아오시는 길 →
             </Link>
           </div>
-          <div className="flex min-h-64 items-center justify-center rounded-2xl bg-slate-100 text-slate-400">
-            지도 영역 (오시는 길 페이지에서 확인)
-          </div>
+          <MapEmbed className="h-72 w-full lg:h-full lg:min-h-[20rem]" />
         </div>
       </Section>
     </>
