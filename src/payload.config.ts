@@ -39,6 +39,8 @@ export default buildConfig({
     client: {
       url: process.env.DATABASE_URI || 'file:./jinsung.db',
     },
+    // 개발: 자동 push로 스키마 동기화 / 프로덕션: 컨테이너 시작 시 `payload migrate` 적용
+    // (마이그레이션 파일: src/migrations)
   }),
   sharp,
   plugins: [],

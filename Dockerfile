@@ -8,9 +8,10 @@ ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 WORKDIR /app
 
 # 1) 의존성 설치
+# (이 템플릿의 lockfile은 peer 의존성 문제로 `npm ci` 엄격검증을 통과하지 못해 npm install 사용)
 FROM base AS deps
-COPY package.json package-lock.json ./
-RUN npm ci
+COPY package.json package-lock.json* ./
+RUN npm install --no-audit --no-fund
 
 # 2) 빌드
 FROM base AS build
@@ -37,4 +38,5 @@ COPY --from=build /app/tsconfig.json ./tsconfig.json
 RUN mkdir -p /app/data /app/media
 
 EXPOSE 3000
-CMD ["npm", "run", "start"]
+# 시작 시 마이그레이션 적용(테이블 생성/동기화) 후 서버 기동
+CMD ["sh", "-c", "npm run payload -- migrate && npm run start"]
