@@ -45,21 +45,21 @@ export default function LocationPage() {
           <div className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm">
             <div className="space-y-4">
               <div>
-                <p className="text-sm font-bold uppercase tracking-widest text-brand-500">휴대폰</p>
-                <a
-                  href={mobileHref}
-                  className="mt-1 block text-2xl font-bold text-brand-700 hover:text-brand-800"
-                >
-                  {site.mobile}
-                </a>
-              </div>
-              <div>
                 <p className="text-sm font-bold uppercase tracking-widest text-brand-500">전화</p>
                 <a
                   href={telHref}
                   className="mt-1 block text-2xl font-bold text-brand-700 hover:text-brand-800"
                 >
                   {site.tel}
+                </a>
+              </div>
+              <div>
+                <p className="text-sm font-bold uppercase tracking-widest text-brand-500">휴대폰</p>
+                <a
+                  href={mobileHref}
+                  className="mt-1 block text-2xl font-bold text-brand-700 hover:text-brand-800"
+                >
+                  {site.mobile}
                 </a>
               </div>
               <div>
@@ -183,10 +183,10 @@ export default function LocationPage() {
             />
           </div>
           <a
-            href={mobileHref}
+            href={telHref}
             className="inline-flex shrink-0 items-center justify-center rounded-lg bg-accent px-9 py-5 text-xl font-bold text-white shadow-sm transition-colors hover:bg-accent-dark"
           >
-            ☎&nbsp;{site.mobile}
+            ☎&nbsp;{site.tel}
           </a>
         </div>
       </Section>

@@ -6,7 +6,7 @@ import config from '@/payload.config'
 import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { PageHero } from '@/components/site/PageHero'
-import { site, mobileHref } from '@/lib/site'
+import { site, telHref } from '@/lib/site'
 
 export const metadata = { title: '공지·작업사례' }
 
@@ -59,10 +59,10 @@ export default async function BoardListPage() {
               작업 사례나 공지사항이 곧 업로드될 예정입니다.
             </p>
             <a
-              href={mobileHref}
+              href={telHref}
               className="mt-2 inline-flex items-center justify-center rounded-lg bg-accent px-7 py-4 text-lg font-bold text-white shadow-sm transition-colors hover:bg-accent-dark"
             >
-              ☎ 전화 문의 {site.mobile}
+              ☎ 전화 문의 {site.tel}
             </a>
           </div>
         ) : (

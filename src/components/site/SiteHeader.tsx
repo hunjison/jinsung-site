@@ -20,11 +20,11 @@ export function SiteHeader() {
       <div className="hidden bg-brand-800 text-white sm:block">
         <Container className="flex h-9 items-center justify-end gap-5 text-sm">
           <span className="text-brand-100">강원도 원주 · 레이저 가공 전문</span>
-          <a href={mobileHref} className="font-semibold hover:text-accent">
-            📱 {site.mobile}
-          </a>
           <a href={telHref} className="font-semibold hover:text-accent">
             ☎ {site.tel}
+          </a>
+          <a href={mobileHref} className="font-semibold hover:text-accent">
+            📱 {site.mobile}
           </a>
         </Container>
       </div>
@@ -56,7 +56,7 @@ export function SiteHeader() {
 
         {/* 데스크톱 CTA */}
         <a
-          href={mobileHref}
+          href={telHref}
           className="hidden rounded-lg bg-accent px-5 py-2.5 text-[1.05rem] font-bold text-white shadow-sm transition-colors hover:bg-accent-dark lg:inline-block"
         >
           전화 상담
@@ -92,10 +92,10 @@ export function SiteHeader() {
               </Link>
             ))}
             <a
-              href={mobileHref}
+              href={telHref}
               className="mt-2 mb-2 rounded-lg bg-accent px-4 py-3 text-center text-lg font-bold text-white"
             >
-              ☎ 전화 상담 {site.mobile}
+              ☎ 전화 상담 {site.tel}
             </a>
           </Container>
         </nav>

@@ -98,10 +98,10 @@ export default async function HomePage() {
               제품·가공 보기
             </Link>
             <a
-              href={mobileHref}
+              href={telHref}
               className="inline-flex items-center justify-center rounded-lg bg-accent px-7 py-4 text-lg font-bold text-white shadow-sm transition-colors hover:bg-accent-dark"
             >
-              ☎ 전화 상담 {site.mobile}
+              ☎ 전화 상담 {site.tel}
             </a>
           </div>
         </Container>
@@ -195,18 +195,18 @@ export default async function HomePage() {
             />
             <dl className="mt-8 space-y-3 text-lg">
               <div className="flex gap-3">
-                <dt className="w-20 shrink-0 font-bold text-slate-500">휴대폰</dt>
-                <dd>
-                  <a href={mobileHref} className="font-bold text-brand-700">
-                    {site.mobile}
-                  </a>
-                </dd>
-              </div>
-              <div className="flex gap-3">
                 <dt className="w-20 shrink-0 font-bold text-slate-500">전화</dt>
                 <dd>
                   <a href={telHref} className="font-bold text-brand-700">
                     {site.tel}
+                  </a>
+                </dd>
+              </div>
+              <div className="flex gap-3">
+                <dt className="w-20 shrink-0 font-bold text-slate-500">휴대폰</dt>
+                <dd>
+                  <a href={mobileHref} className="font-bold text-brand-700">
+                    {site.mobile}
                   </a>
                 </dd>
               </div>

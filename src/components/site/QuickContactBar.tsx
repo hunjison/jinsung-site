@@ -1,4 +1,4 @@
-import { site, mobileHref } from '@/lib/site'
+import { site, telHref } from '@/lib/site'
 
 /* 브랜드 로고 아이콘 (인라인 SVG) */
 function PhoneIcon({ className }: { className?: string }) {
@@ -41,11 +41,11 @@ export function QuickContactBar() {
       {/* 모바일 하단 고정 바 */}
       <div className="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200 bg-white/95 p-3 backdrop-blur lg:hidden">
         <a
-          href={mobileHref}
+          href={telHref}
           className="flex h-14 items-center justify-center gap-2 rounded-xl bg-accent text-xl font-extrabold text-white shadow-lg active:bg-accent-dark"
         >
           <PhoneIcon className="h-6 w-6" />
-          전화 상담 {site.mobile}
+          전화 상담 {site.tel}
         </a>
       </div>
       {/* 모바일 하단 바에 가려지지 않도록 여백 확보 */}
@@ -54,10 +54,10 @@ export function QuickContactBar() {
       {/* 데스크톱 우측 플로팅 */}
       <div className="fixed right-5 bottom-8 z-40 hidden flex-col gap-3 lg:flex">
         <a
-          href={mobileHref}
+          href={telHref}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-accent text-white shadow-lg transition-transform hover:scale-105"
-          aria-label={`전화 ${site.mobile}`}
-          title={`전화 ${site.mobile}`}
+          aria-label={`전화 ${site.tel}`}
+          title={`전화 ${site.tel}`}
         >
           <PhoneIcon className="h-7 w-7" />
         </a>
