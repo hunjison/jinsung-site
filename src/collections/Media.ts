@@ -1,4 +1,10 @@
 import type { CollectionConfig } from 'payload'
+import path from 'path'
+import { fileURLToPath } from 'url'
+
+const dirname = path.dirname(fileURLToPath(import.meta.url))
+// 업로드 파일 저장 위치 = 프로젝트 루트의 /media (배포 시 볼륨으로 마운트)
+const mediaDir = path.resolve(dirname, '../../media')
 
 /** 업로드 이미지 (제품·게시판 공용) */
 export const Media: CollectionConfig = {
@@ -18,12 +24,12 @@ export const Media: CollectionConfig = {
     },
   ],
   upload: {
-    // 한글 파일명 깨짐 방지를 위해 업로드 파일명을 안전하게 정규화
-    formatOptions: undefined,
+    staticDir: mediaDir,
+    // 한글 파일명 깨짐 방지 — 업로드 시 안전한 파일명으로 정규화
     imageSizes: [
-      { name: 'thumbnail', width: 480, height: undefined, position: 'centre' },
-      { name: 'card', width: 900, height: undefined, position: 'centre' },
-      { name: 'large', width: 1600, height: undefined, position: 'centre' },
+      { name: 'thumbnail', width: 480, position: 'centre' },
+      { name: 'card', width: 900, position: 'centre' },
+      { name: 'large', width: 1600, position: 'centre' },
     ],
     focalPoint: false,
   },

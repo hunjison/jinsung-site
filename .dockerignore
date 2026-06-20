@@ -1,0 +1,16 @@
+node_modules
+.next
+.git
+.env
+.env.*
+!.env.example
+jinsung.db
+jinsung.db-shm
+jinsung.db-wal
+data
+media
+.DS_Store
+npm-debug.log*
+test-results
+playwright-report
+tests

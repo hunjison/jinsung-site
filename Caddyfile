@@ -1,0 +1,15 @@
+# Caddy 리버스 프록시 — 자동 HTTPS
+{
+	email {$ACME_EMAIL}
+}
+
+{$DOMAIN} {
+	encode gzip zstd
+
+	# 이미지 업로드 대비 본문 크기 여유
+	request_body {
+		max_size 50MB
+	}
+
+	reverse_proxy app:3000
+}
