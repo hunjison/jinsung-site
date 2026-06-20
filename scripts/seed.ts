@@ -6,6 +6,7 @@
  * 실제 자료가 준비되면 관리자에서 지우고 교체하면 된다.
  */
 import 'dotenv/config'
+import { existsSync, readFileSync } from 'fs'
 import sharp from 'sharp'
 import { getPayload } from 'payload'
 import config from '../src/payload.config'
@@ -213,6 +214,22 @@ async function main() {
     console.log(`✓ 동영상 ${videos.length}건 생성(샘플)`)
   } else {
     console.log('· 동영상이 이미 있어 건너뜀')
+  }
+
+  // ── Hero 배경 동영상 (샘플; 파일이 있을 때만) ──
+  const home = await payload.findGlobal({ slug: 'home' })
+  const heroPath = process.env.HERO_VIDEO_PATH || '/tmp/sample-hero.mp4'
+  if (!home?.heroVideo && existsSync(heroPath)) {
+    const data = readFileSync(heroPath)
+    const v = await payload.create({
+      collection: 'hero-media',
+      data: { alt: '홈 배경 동영상 (샘플)' },
+      file: { data, mimetype: 'video/mp4', name: 'hero-sample.mp4', size: data.length },
+    })
+    await payload.updateGlobal({ slug: 'home', data: { heroVideo: v.id } })
+    console.log('✓ 홈 배경 동영상(샘플) 설정')
+  } else {
+    console.log('· 홈 배경 동영상: 이미 설정됨 또는 샘플 파일 없음(건너뜀)')
   }
 
   console.log('시드 완료.')

@@ -11,6 +11,8 @@ import { Media } from './collections/Media'
 import { Products } from './collections/Products'
 import { Videos } from './collections/Videos'
 import { Posts } from './collections/Posts'
+import { HeroMedia } from './collections/HeroMedia'
+import { Home } from './globals/Home'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -25,7 +27,8 @@ export default buildConfig({
       titleSuffix: ' · 진성레이져 관리자',
     },
   },
-  collections: [Products, Videos, Posts, Media, Users],
+  collections: [Products, Videos, Posts, Media, HeroMedia, Users],
+  globals: [Home],
   editor: lexicalEditor(),
   i18n: {
     fallbackLanguage: 'ko',

@@ -1,22 +1,56 @@
 import Link from 'next/link'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
 import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
 import { productCategories, site, strengths, telHref } from '@/lib/site'
 
-export default function HomePage() {
+export const dynamic = 'force-dynamic'
+
+type MediaUrl = { url?: string | null } | number | null | undefined
+const urlOf = (m: MediaUrl): string | null =>
+  m && typeof m === 'object' && 'url' in m ? (m.url ?? null) : null
+
+export default async function HomePage() {
+  const payload = await getPayload({ config })
+  const home = await payload.findGlobal({ slug: 'home', depth: 1 }).catch(() => null)
+  const heroVideoUrl = urlOf(home?.heroVideo as MediaUrl)
+  const heroPosterUrl = urlOf(home?.heroPoster as MediaUrl)
+
   return (
     <>
       {/* 히어로 */}
-      <section className="relative overflow-hidden bg-brand-800 text-white">
-        <div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage:
-              'radial-gradient(circle at 20% 20%, #5085c1 0, transparent 45%), radial-gradient(circle at 80% 60%, #e07b1f 0, transparent 40%)',
-          }}
-          aria-hidden
-        />
+      <section className="relative overflow-hidden bg-brand-900 text-white">
+        {heroVideoUrl ? (
+          <>
+            <video
+              className="absolute inset-0 h-full w-full object-cover"
+              autoPlay
+              muted
+              loop
+              playsInline
+              poster={heroPosterUrl ?? undefined}
+              aria-hidden
+            >
+              <source src={heroVideoUrl} />
+            </video>
+            {/* 가독성용 어두운 오버레이 */}
+            <div
+              className="absolute inset-0 bg-gradient-to-t from-brand-900 via-brand-900/70 to-brand-900/40"
+              aria-hidden
+            />
+          </>
+        ) : (
+          <div
+            className="absolute inset-0 opacity-20"
+            style={{
+              backgroundImage:
+                'radial-gradient(circle at 20% 20%, #5085c1 0, transparent 45%), radial-gradient(circle at 80% 60%, #e07b1f 0, transparent 40%)',
+            }}
+            aria-hidden
+          />
+        )}
         <Container className="relative py-20 sm:py-28">
           <p className="mb-4 text-base font-bold tracking-wider text-brand-200">
             {site.region} · 레이저 가공 전문
