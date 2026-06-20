@@ -1,5 +1,6 @@
 import { sqliteAdapter } from '@payloadcms/db-sqlite'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { ko } from '@payloadcms/translations/languages/ko'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -7,6 +8,9 @@ import sharp from 'sharp'
 
 import { Users } from './collections/Users'
 import { Media } from './collections/Media'
+import { Products } from './collections/Products'
+import { Videos } from './collections/Videos'
+import { Posts } from './collections/Posts'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -17,9 +21,16 @@ export default buildConfig({
     importMap: {
       baseDir: path.resolve(dirname),
     },
+    meta: {
+      titleSuffix: ' · 진성레이져 관리자',
+    },
   },
-  collections: [Users, Media],
+  collections: [Products, Videos, Posts, Media, Users],
   editor: lexicalEditor(),
+  i18n: {
+    fallbackLanguage: 'ko',
+    supportedLanguages: { ko },
+  },
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -31,4 +42,20 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  // 첫 실행 시 관리자 계정이 없으면 .env 값으로 고정 관리자 1명을 생성
+  onInit: async (payload) => {
+    const { totalDocs } = await payload.count({ collection: 'users' })
+    if (totalDocs > 0) return
+    const email = process.env.PAYLOAD_ADMIN_EMAIL
+    const password = process.env.PAYLOAD_ADMIN_PASSWORD
+    if (!email || !password) {
+      payload.logger.warn('PAYLOAD_ADMIN_EMAIL/PASSWORD 미설정 — 관리자 자동 생성 건너뜀')
+      return
+    }
+    await payload.create({
+      collection: 'users',
+      data: { email, password, name: '관리자' },
+    })
+    payload.logger.info(`관리자 계정 생성됨: ${email}`)
+  },
 })
