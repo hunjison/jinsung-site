@@ -56,3 +56,6 @@ node_modules/
 
 # 수집한 콘텐츠(네이버 이미지 등) — 깃 제외
 /content
+
+# 배포 마커
+/.last-deployed
