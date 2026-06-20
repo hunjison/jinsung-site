@@ -8,15 +8,43 @@ import { productCategories, site, strengths, telHref } from '@/lib/site'
 
 export const dynamic = 'force-dynamic'
 
-type MediaUrl = { url?: string | null } | number | null | undefined
-const urlOf = (m: MediaUrl): string | null =>
+type AnyMedia = { url?: string | null; sizes?: { card?: { url?: string | null } } } | number | null | undefined
+const videoUrl = (m: AnyMedia): string | null =>
   m && typeof m === 'object' && 'url' in m ? (m.url ?? null) : null
+const cardUrl = (m: AnyMedia): string | null =>
+  m && typeof m === 'object' ? (m.sizes?.card?.url ?? m.url ?? null) : null
+
+type Card = { title: string; description?: string | null; image?: AnyMedia }
 
 export default async function HomePage() {
   const payload = await getPayload({ config })
-  const home = await payload.findGlobal({ slug: 'home', depth: 1 }).catch(() => null)
-  const heroVideoUrl = urlOf(home?.heroVideo as MediaUrl)
-  const heroPosterUrl = urlOf(home?.heroPoster as MediaUrl)
+  const home = (await payload.findGlobal({ slug: 'home', depth: 1 }).catch(() => null)) as any
+
+  const heroVideoUrl = videoUrl(home?.heroVideo)
+  const heroPosterUrl = videoUrl(home?.heroPoster)
+
+  // 설정값 우선, 없으면 기본 문구로 폴백
+  const heroEyebrow = home?.heroEyebrow || `${site.region} · 레이저 가공 전문`
+  const heroTitle = home?.heroTitle || '스텐·철·알루미늄\n파이프·판재 정밀 레이저 가공'
+  const heroSubtitle =
+    home?.heroSubtitle ||
+    '파이프레이저와 판(평철)레이저로 절단·타공은 물론, 난간·방범창·조형물 등 각종 제품을 도면 작업부터 제작까지 책임집니다. 원주의 레이저 가공, 진성레이져입니다.'
+  const strengthsTitle = home?.strengthsTitle || '진성레이져의 강점'
+  const strengthsSubtitle =
+    home?.strengthsSubtitle || '한 곳에서 소재·가공·제작까지. 믿고 맡기실 수 있습니다.'
+  const strengthCards: Card[] =
+    home?.strengths?.length > 0
+      ? home.strengths
+      : strengths.map((s) => ({ title: s.title, description: s.desc }))
+  const productsTitle = home?.productsTitle || '제품 · 가공 분야'
+  const productsSubtitle = home?.productsSubtitle || '아래 분야 외에도 다양한 주문제작이 가능합니다.'
+  const productCards: Card[] =
+    home?.productCards?.length > 0
+      ? home.productCards
+      : productCategories.map((c) => ({ title: c.name, description: c.desc }))
+  const videoTitle = home?.videoTitle || '작업 영상으로 보는 가공 현장'
+  const videoSubtitle =
+    home?.videoSubtitle || '파이프 타공·평철 가공 등 실제 작업 영상을 확인해 보세요.'
 
   return (
     <>
@@ -35,7 +63,6 @@ export default async function HomePage() {
             >
               <source src={heroVideoUrl} />
             </video>
-            {/* 가독성용 어두운 오버레이 */}
             <div
               className="absolute inset-0 bg-gradient-to-t from-brand-900 via-brand-900/70 to-brand-900/40"
               aria-hidden
@@ -52,18 +79,16 @@ export default async function HomePage() {
           />
         )}
         <Container className="relative py-20 sm:py-28">
-          <p className="mb-4 text-base font-bold tracking-wider text-brand-200">
-            {site.region} · 레이저 가공 전문
-          </p>
+          <p className="mb-4 text-base font-bold tracking-wider text-brand-200">{heroEyebrow}</p>
           <h1 className="max-w-3xl text-4xl leading-tight text-white sm:text-5xl">
-            스텐·철·알루미늄
-            <br />
-            파이프·판재 정밀 레이저 가공
+            {heroTitle.split('\n').map((line: string, i: number) => (
+              <span key={i}>
+                {i > 0 && <br />}
+                {line}
+              </span>
+            ))}
           </h1>
-          <p className="mt-5 max-w-2xl text-lg text-brand-100 sm:text-xl">
-            파이프레이저와 판(평철)레이저로 절단·타공은 물론, 난간·방범창·조형물 등 각종 제품을 도면
-            작업부터 제작까지 책임집니다. 원주의 레이저 가공, 진성레이져입니다.
-          </p>
+          <p className="mt-5 max-w-2xl text-lg text-brand-100 sm:text-xl">{heroSubtitle}</p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <Link
               href="/products"
@@ -83,43 +108,61 @@ export default async function HomePage() {
 
       {/* 강점 */}
       <Section>
-        <SectionHeading
-          eyebrow="WHY JINSUNG"
-          title="진성레이져의 강점"
-          description="한 곳에서 소재·가공·제작까지. 믿고 맡기실 수 있습니다."
-        />
+        <SectionHeading eyebrow="WHY JINSUNG" title={strengthsTitle} description={strengthsSubtitle} />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {strengths.map((s) => (
-            <div
-              key={s.title}
-              className="rounded-2xl border border-slate-200 bg-white p-7 shadow-sm transition-shadow hover:shadow-md"
-            >
-              <h3 className="text-xl text-brand-700">{s.title}</h3>
-              <p className="mt-3 text-slate-600">{s.desc}</p>
-            </div>
-          ))}
+          {strengthCards.map((c, i) => {
+            const img = cardUrl(c.image)
+            return (
+              <div
+                key={i}
+                className="flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-shadow hover:shadow-md"
+              >
+                {img ? (
+                  <img
+                    src={img}
+                    alt={c.title}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                ) : null}
+                <div className="p-6">
+                  <h3 className="text-xl text-brand-700">{c.title}</h3>
+                  {c.description ? <p className="mt-2 text-slate-600">{c.description}</p> : null}
+                </div>
+              </div>
+            )
+          })}
         </div>
       </Section>
 
       {/* 제품·가공 요약 */}
       <Section tone="muted">
-        <SectionHeading
-          eyebrow="PRODUCTS"
-          title="제품 · 가공 분야"
-          description="아래 분야 외에도 다양한 주문제작이 가능합니다."
-        />
+        <SectionHeading eyebrow="PRODUCTS" title={productsTitle} description={productsSubtitle} />
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {productCategories.map((c) => (
-            <Link
-              key={c.slug}
-              href="/products"
-              className="group rounded-2xl border border-slate-200 bg-white p-7 transition-all hover:border-brand-300 hover:shadow-md"
-            >
-              <h3 className="text-xl text-slate-900 group-hover:text-brand-700">{c.name}</h3>
-              <p className="mt-3 text-slate-600">{c.desc}</p>
-              <span className="mt-4 inline-block font-semibold text-brand-600">자세히 보기 →</span>
-            </Link>
-          ))}
+          {productCards.map((c, i) => {
+            const img = cardUrl(c.image)
+            return (
+              <Link
+                key={i}
+                href="/products"
+                className="group flex flex-col overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all hover:border-brand-300 hover:shadow-md"
+              >
+                {img ? (
+                  <img
+                    src={img}
+                    alt={c.title}
+                    loading="lazy"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                ) : null}
+                <div className="p-6">
+                  <h3 className="text-xl text-slate-900 group-hover:text-brand-700">{c.title}</h3>
+                  {c.description ? <p className="mt-2 text-slate-600">{c.description}</p> : null}
+                  <span className="mt-3 inline-block font-semibold text-brand-600">자세히 보기 →</span>
+                </div>
+              </Link>
+            )
+          })}
         </div>
       </Section>
 
@@ -127,10 +170,8 @@ export default async function HomePage() {
       <Section tone="brand">
         <div className="flex flex-col items-start justify-between gap-6 md:flex-row md:items-center">
           <div>
-            <h2 className="text-3xl text-white">작업 영상으로 보는 가공 현장</h2>
-            <p className="mt-3 text-lg text-brand-100">
-              파이프 타공·평철 가공 등 실제 작업 영상을 확인해 보세요.
-            </p>
+            <h2 className="text-3xl text-white">{videoTitle}</h2>
+            <p className="mt-3 text-lg text-brand-100">{videoSubtitle}</p>
           </div>
           <Link
             href="/videos"

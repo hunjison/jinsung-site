@@ -1,5 +1,6 @@
 import * as migration_20260620_032700_initial from './20260620_032700_initial';
 import * as migration_20260620_040329_hero_video from './20260620_040329_hero_video';
+import * as migration_20260620_120707_home_editable from './20260620_120707_home_editable';
 
 export const migrations = [
   {
@@ -10,6 +11,11 @@ export const migrations = [
   {
     up: migration_20260620_040329_hero_video.up,
     down: migration_20260620_040329_hero_video.down,
-    name: '20260620_040329_hero_video'
+    name: '20260620_040329_hero_video',
+  },
+  {
+    up: migration_20260620_120707_home_editable.up,
+    down: migration_20260620_120707_home_editable.down,
+    name: '20260620_120707_home_editable'
   },
 ];
