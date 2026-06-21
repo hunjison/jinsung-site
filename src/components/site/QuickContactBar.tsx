@@ -62,20 +62,21 @@ export function QuickContactBar() {
           <PhoneIcon className="h-7 w-7" />
         </a>
         <a
-          href="/location"
+          href={site.links.kakao || '/location'}
+          {...(site.links.kakao ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
           className="flex h-14 w-14 items-center justify-center rounded-full bg-[#FEE500] text-[#3C1E1E] shadow-lg transition-transform hover:scale-105"
-          aria-label={`카카오톡 상담 (ID: ${site.kakaoId})`}
-          title={`카카오톡 상담 (ID: ${site.kakaoId})`}
+          aria-label="카카오톡 상담"
+          title="카카오톡 상담"
         >
           <KakaoIcon className="h-7 w-7" />
         </a>
         <a
-          href={site.links.blog}
+          href={site.links.cafe}
           target="_blank"
           rel="noopener noreferrer"
           className="flex h-14 w-14 items-center justify-center rounded-full bg-[#03C75A] text-white shadow-lg transition-transform hover:scale-105"
-          aria-label="네이버 블로그"
-          title="네이버 블로그"
+          aria-label="네이버 카페"
+          title="네이버 카페"
         >
           <NaverIcon className="h-6 w-6" />
         </a>
