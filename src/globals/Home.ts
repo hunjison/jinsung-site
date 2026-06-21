@@ -79,5 +79,22 @@ export const Home: GlobalConfig = {
         { name: 'videoSubtitle', label: '설명', type: 'text' },
       ],
     },
+    {
+      type: 'collapsible',
+      label: '회사소개 — 보유 공정·설비 사진',
+      fields: [
+        {
+          name: 'facilityImages',
+          label: '시설/설비 사진',
+          type: 'upload',
+          relationTo: 'media',
+          hasMany: true,
+          admin: {
+            description:
+              '회사소개 페이지의 ‘보유 공정·설비’ 옆에 표시됩니다. 비우면 ‘시설 사진 준비 중’으로 표시.',
+          },
+        },
+      ],
+    },
   ],
 }

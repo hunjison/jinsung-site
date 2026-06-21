@@ -1,4 +1,6 @@
 import Link from 'next/link'
+import { getPayload } from 'payload'
+import config from '@/payload.config'
 import { Container } from '@/components/site/Container'
 import { Section } from '@/components/site/Section'
 import { SectionHeading } from '@/components/site/SectionHeading'
@@ -6,6 +8,7 @@ import { PageHero } from '@/components/site/PageHero'
 import { site, telHref, strengths, productCategories } from '@/lib/site'
 
 export const metadata = { title: '회사소개' }
+export const dynamic = 'force-dynamic'
 
 /** 보유 공정·설비 목록 (실제 데이터 기반, 하드코딩 허용) */
 const processes = [
@@ -31,7 +34,16 @@ const processes = [
   },
 ]
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const payload = await getPayload({ config })
+  const home = (await payload.findGlobal({ slug: 'home', depth: 1 }).catch(() => null)) as {
+    facilityImages?: Array<{ url?: string | null; alt?: string; sizes?: { card?: { url?: string | null } } } | number>
+  } | null
+  const facility = (home?.facilityImages || []).filter(
+    (m): m is { url?: string | null; alt?: string; sizes?: { card?: { url?: string | null } } } =>
+      typeof m === 'object' && m !== null,
+  )
+
   return (
     <>
       {/* 1. 페이지 히어로 */}
@@ -133,13 +145,27 @@ export default function AboutPage() {
             ))}
           </ul>
 
-          {/* 시설 사진 플레이스홀더 */}
-          <div className="flex min-h-72 items-center justify-center rounded-2xl bg-slate-200 text-slate-400 lg:min-h-full">
-            <div className="text-center">
-              <p className="text-2xl">📷</p>
-              <p className="mt-2 text-base">시설 사진 준비 중</p>
+          {/* 시설 사진 (관리자 업로드) — 없으면 플레이스홀더 */}
+          {facility.length > 0 ? (
+            <div className="grid grid-cols-2 gap-3 lg:content-start">
+              {facility.map((m, i) => (
+                <img
+                  key={i}
+                  src={m.sizes?.card?.url || m.url || ''}
+                  alt={m.alt || '시설 사진'}
+                  loading="lazy"
+                  className="aspect-[4/3] w-full rounded-2xl border border-slate-200 object-cover"
+                />
+              ))}
             </div>
-          </div>
+          ) : (
+            <div className="flex min-h-72 items-center justify-center rounded-2xl bg-slate-200 text-slate-400 lg:min-h-full">
+              <div className="text-center">
+                <p className="text-2xl">📷</p>
+                <p className="mt-2 text-base">시설 사진 준비 중</p>
+              </div>
+            </div>
+          )}
         </div>
       </Section>
 
