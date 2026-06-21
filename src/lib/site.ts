@@ -27,8 +27,8 @@ export const site = {
     cafe: 'https://cafe.naver.com/jinsungstill3634',
     blog: 'https://blog.naver.com/wkdrhkdwns01',
     youtube: 'https://www.youtube.com/@진성레이져',
-    // 카카오톡 1:1 상담 링크 (카카오 채널 chat URL 또는 오픈채팅 링크). 비우면 오시는 길로 연결.
-    kakao: '',
+    // 카카오톡 1:1 상담 링크 (오픈채팅). 비우면 오시는 길로 연결.
+    kakao: 'https://open.kakao.com/o/gd1NsRQg',
   },
 } as const
 
