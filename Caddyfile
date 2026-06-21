@@ -6,9 +6,9 @@
 {$DOMAIN} {
 	encode gzip zstd
 
-	# 이미지 업로드 대비 본문 크기 여유
+	# 동영상 업로드 대비 본문 크기 여유 (배경 동영상 등)
 	request_body {
-		max_size 50MB
+		max_size 300MB
 	}
 
 	reverse_proxy app:3000
